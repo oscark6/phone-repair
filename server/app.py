@@ -13,6 +13,11 @@ db.init_app(app)
 api = Api(app)
 jwt = JWTManager(app)
 
+# Root route
+@app.route('/')
+def home():
+    return "Welcome to the Phone Repair Service API"
+
 # RESTful resources
 class Register(Resource):
     def post(self):
