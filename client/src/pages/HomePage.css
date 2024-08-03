@@ -1,0 +1,27 @@
+.home {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px;
+  }
+  
+  .home h1 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+  }
+  
+  .home p {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+  }
+  
+  .home ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .home ul li {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+  }
+  

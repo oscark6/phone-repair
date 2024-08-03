@@ -1,0 +1,22 @@
+.appointment-history {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px;
+  }
+  
+  .appointment-history h1 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+  }
+  
+  .appointment-history ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .appointment-history ul li {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+  }
+  

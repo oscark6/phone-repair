@@ -1,0 +1,16 @@
+.contact {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px;
+  }
+  
+  .contact h1 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+  }
+  
+  .contact p {
+    font-size: 1.2em;
+  }
+  

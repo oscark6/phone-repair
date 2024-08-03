@@ -1,0 +1,22 @@
+.services {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px;
+  }
+  
+  .services h1 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+  }
+  
+  .services ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .services ul li {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+  }
+  
