@@ -1,16 +1,108 @@
+/* AboutUsPage.css */
+
 .about {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    background: linear-gradient(135deg, #5ffcff, #feb47b);
+    color: white;
     padding: 50px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    animation: fadeIn 1.5s ease-in-out;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .about::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0) 70%);
+    animation: rotateBackground 15s linear infinite;
   }
   
   .about h1 {
-    font-size: 2.5em;
+    font-size: 3.5em;
     margin-bottom: 20px;
+    font-family: 'Arial Black', sans-serif;
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+    animation: bounce 2s infinite;
   }
   
-  .about p {
+  .about .content {
     font-size: 1.2em;
+    line-height: 1.8;
+    max-width: 700px;
+    margin: 0 auto;
+    font-family: 'Georgia', serif;
+    border: 2px solid rgba(255, 255, 255, 0.6);
+    padding: 25px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(5px);
+    text-align: left;
+  }
+  
+  .about .content h2 {
+    margin-top: 20px;
+    font-size: 1.8em;
+  }
+  
+  .about .content ul {
+    list-style-type: disc;
+    margin-left: 20px;
+  }
+  
+  .about .content address {
+    margin-top: 20px;
+    font-style: normal;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .about {
+      padding: 30px;
+    }
+  
+    .about h1 {
+      font-size: 2.5em;
+    }
+  
+    .about .content {
+      font-size: 1em;
+    }
+  }
+  
+  /* Keyframe Animations */
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+      transform: translateY(-30px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes bounce {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+  
+  @keyframes rotateBackground {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
   }
   

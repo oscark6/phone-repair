@@ -1,27 +1,22 @@
-.home {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 50px;
-  }
-  
-  .home h1 {
-    font-size: 2.5em;
-    margin-bottom: 20px;
-  }
-  
-  .home p {
-    font-size: 1.2em;
-    margin-bottom: 20px;
-  }
-  
-  .home ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .home ul li {
-    font-size: 1.2em;
-    margin-bottom: 10px;
-  }
-  
+/* HomePage.css */
+
+.hero {
+  background: url('https://smartphonestorekenya.com/wp-content/uploads/2021/09/irepair-main-banner.jpeg') no-repeat center center/cover;
+  height: 100vh;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: black;
+}
+
+.hero p {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+}

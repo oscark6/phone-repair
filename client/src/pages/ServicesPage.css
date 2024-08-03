@@ -1,22 +1,127 @@
+/* ServicesPage.css */
+
 .services {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     padding: 50px;
+    background: linear-gradient(135deg, #ff7e5f, #feb47b);
+    color: white;
+    text-align: center;
   }
   
   .services h1 {
-    font-size: 2.5em;
-    margin-bottom: 20px;
+    font-size: 3em;
+    margin-bottom: 30px;
+    font-family: 'Arial Black', sans-serif;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    animation: fadeIn 1s ease-in-out;
   }
   
-  .services ul {
-    list-style-type: none;
-    padding: 0;
+  @keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
   }
   
-  .services ul li {
+  .service-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    animation: slideUp 1s ease-in-out;
+  }
+  
+  @keyframes slideUp {
+    0% { transform: translateY(50px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+  }
+  
+  .service-item {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    padding: 20px;
+    width: 300px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .service-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 0;
+  }
+  
+  .service-item:hover::before {
+    opacity: 1;
+  }
+  
+  .service-item h2 {
+    font-size: 1.5em;
+    margin-bottom: 15px;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .service-item p {
     font-size: 1.2em;
+    line-height: 1.6;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .service-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  }
+  
+  .service-item::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, transparent, white, transparent);
+    transition: left 0.3s;
+    z-index: 1;
+  }
+  
+  .service-item:hover::after {
+    left: 100%;
+  }
+  
+  .service-item .icon {
+    font-size: 3em;
     margin-bottom: 10px;
+    color: white;
+    position: relative;
+    z-index: 1;
+    transition: color 0.3s;
+  }
+  
+  .service-item:hover .icon {
+    color: #ff7e5f;
+  }
+  
+  @media (max-width: 768px) {
+    .services {
+      padding: 20px;
+    }
+  
+    .service-container {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .service-item {
+      width: 100%;
+      max-width: 500px;
+    }
   }
   
