@@ -4,11 +4,11 @@ from flask_restful import Api, Resource
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 from werkzeug.utils import secure_filename
 import os
-from config import Config
+from config import DevelopmentConfig
 from models import db, User, Appointment, Technician, Inventory
 
 app = Flask(__name__)
-app.config.from_object(Config)
+app.config.from_object(DevelopmentConfig)
 db.init_app(app)
 api = Api(app)
 jwt = JWTManager(app)
