@@ -1,8 +1,7 @@
-import os
+class DevelopmentConfig(Config):
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///repair_shop_dev.db'
+    DEBUG = True
 
-class Config:
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///repair_shop.db'
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
-    JWT_SECRET_KEY = 'your_jwt_secret_key'
-    UPLOAD_FOLDER = 'uploads'
-    ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+class ProductionConfig(Config):
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
+    DEBUG = False
