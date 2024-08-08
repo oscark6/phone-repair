@@ -1,5 +1,6 @@
 import React from 'react';
 import './AboutUsPage.css';
+import Footer from './Footer';
 
 function AboutUsPage() {
   return (
@@ -33,6 +34,7 @@ function AboutUsPage() {
           Email: contact@phonerepairshop.com
         </address>
       </div>
+      <Footer />
     </div>
   );
 }
