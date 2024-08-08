@@ -3,7 +3,10 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_restful import Api, Resource
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 from werkzeug.utils import secure_filename
+from werkzeug.security import check_password_hash, generate_password_hash
+from flask_cors import CORS
 import os
+import re
 from config import Config
 from models import db, User, Appointment, Technician, Inventory
 
@@ -12,34 +15,78 @@ app.config.from_object(Config)
 db.init_app(app)
 api = Api(app)
 jwt = JWTManager(app)
+CORS(app)
 
 # Root route
 @app.route('/')
 def home():
     return "Welcome to the Phone Repair Service API"
 
-# RESTful resources
-class Register(Resource):
-    def post(self):
-        data = request.get_json()
-        new_user = User(
-            username=data['username'],
-            email=data['email'],
-            password=data['password'],
-            role='user'  # Default role
-        )
-        db.session.add(new_user)
-        db.session.commit()
-        return {'message': 'User registered successfully'}, 201
+def validate_email(email):
+    email_regex = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+    return re.match(email_regex, email) is not None
 
-class Login(Resource):
-    def post(self):
-        data = request.get_json()
-        user = User.query.filter_by(username=data['username'], password=data['password']).first()
-        if not user:
-            return {'message': 'Invalid credentials'}, 401
-        access_token = create_access_token(identity={'username': user.username, 'role': user.role})
-        return {'access_token': access_token}, 200
+
+
+# RESTful resources
+@app.route('/register', methods=['POST'])
+def register():
+    data = request.get_json()
+
+    # Validate input data
+    if not data or not data.get('username') or not data.get('email') or not data.get('password'):
+        return jsonify({'message': 'Username, email, and password are required'}), 400
+
+    if not validate_email(data['email']):
+        return jsonify({'message': 'Invalid email format'}), 400
+
+    if len(data['password']) < 6:
+        return jsonify({'message': 'Password must be at least 6 characters long'}), 400
+
+    # Check if user or email already exists
+    existing_user = User.query.filter((User.username == data['username']) | (User.email == data['email'])).first()
+    if existing_user:
+        return jsonify({'message': 'Username or email already exists'}), 409
+
+    # Hash the password
+    hashed_password = generate_password_hash(data['password'])
+
+    # Create a new user instance
+    new_user = User(
+        username=data['username'], 
+        email=data['email'], 
+        password=hashed_password,
+        role='user'  # Provide a default role if not specified
+    )
+
+    # Add new user to the database
+    db.session.add(new_user)
+    db.session.commit()
+
+    # Generate access token
+    access_token = create_access_token(identity={'username': new_user.username, 'role': new_user.role})
+    
+    return jsonify({'message': 'User registered successfully', 'access_token': access_token}), 201
+
+
+@app.route('/login', methods=['POST'])
+def login():
+    data = request.get_json()
+
+    # Validate input data
+    if not data or not data.get('username') or not data.get('password'):
+        return jsonify({'message': 'Missing username or password'}), 400
+
+    # Query the user
+    user = User.query.filter_by(username=data['username']).first()
+
+    # Check if user exists and password matches
+    if not user or not check_password_hash(user.password, data['password']):
+        return jsonify({'message': 'Invalid credentials'}), 401
+
+    # Create access token
+    access_token = create_access_token(identity={'username': user.username, 'role': user.role})
+    return jsonify({'access_token': access_token}), 200
 
 class AppointmentResource(Resource):
     @jwt_required()
@@ -116,8 +163,8 @@ class InventoryResource(Resource):
         db.session.commit()
         return {'message': 'Item added to inventory', 'id': new_item.id}
 
-api.add_resource(Register, '/register')
-api.add_resource(Login, '/login')
+# api.add_resource(Register, '/register')
+# api.add_resource(Login, '/login')
 api.add_resource(AppointmentResource, '/appointments/<int:id>')
 api.add_resource(AppointmentListResource, '/appointments')
 api.add_resource(InventoryResource, '/inventory')

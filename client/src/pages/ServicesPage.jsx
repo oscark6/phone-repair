@@ -1,5 +1,6 @@
 import React from 'react';
 import './ServicesPage.css';
+import Footer from './Footer';
 
 function ServicesPage() {
   return (
@@ -43,6 +44,7 @@ function ServicesPage() {
           </p>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

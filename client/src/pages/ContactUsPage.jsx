@@ -1,5 +1,6 @@
 import React from 'react';
 import './ContactUsPage.css';
+import Footer from './Footer';
 
 function ContactUsPage() {
   return (
@@ -44,6 +45,7 @@ function ContactUsPage() {
           <button type="submit">Submit</button>
         </form>
       </div>
+      <Footer />
     </div>
   );
 }
