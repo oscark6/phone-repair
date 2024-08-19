@@ -11,7 +11,7 @@ import AppointmentHistoryPage from './AppointmentHistoryPage';
 import ProfilePage from './ProfilePage';
 import AdminPanelPage from './AdminPanelPage';
 import Navbar from './Navbar';
-//import './App.css';
+// import './App.css';
 
 function App() {
   return (
