@@ -13,7 +13,9 @@ function AppointmentHistoryPage() {
         <li>Appointment 5: Screen Repair on 1924-07-20</li>
         <li>Appointment 6: Battery Replacement on 2023-11-21</li>
         <li>Appointment 7: Screen Repair on 2022-14-23</li>
-        <li>Appointment 8: Water Damage Repair on 2024-08-06</li>
+        <li>Appointment 8: Water Damage Repair on 2024-08-06</li> 
+        <li>Appointment 9: Water Damage Repair on 2024-08-12</li>                                                 
+                                             
       </ul>
     </div>
   );

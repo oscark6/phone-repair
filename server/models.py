@@ -1,4 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 
 db = SQLAlchemy()
 
@@ -15,19 +16,14 @@ class User(db.Model):
     password = db.Column(db.String(100), nullable=False)
     role = db.Column(db.String(50), nullable=False)
     appointments = db.relationship('Appointment', backref='user', lazy=True)
-
-class Appointment(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    technician_id = db.Column(db.Integer, db.ForeignKey('technician.id'), nullable=False)
-    date = db.Column(db.String(100), nullable=False)
-    status = db.Column(db.String(50), nullable=False)
-    description = db.Column(db.String(1000), nullable=True)
+    technicians = db.relationship('Technician',
+                                   secondary=user_technician,
+                                   backref=db.backref('users', lazy=True))
 
 class Technician(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
-    email = db.Column(db.String(100), nullable=False)
+    email = db.Column(db.String(100), nullable=False, unique=True)
     phone = db.Column(db.String(50), nullable=False)
     specialty = db.Column(db.String(100), nullable=False)
     appointments = db.relationship('Appointment', backref='technician', lazy=True)
@@ -38,3 +34,32 @@ class Inventory(db.Model):
     quantity = db.Column(db.Integer, nullable=False)
     price = db.Column(db.Float, nullable=False)
     description = db.Column(db.String(1000), nullable=True)
+
+class Appointment(db.Model):
+    __tablename__ = 'appointment'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    date = db.Column(db.DateTime, nullable=False)
+    service = db.Column(db.String(100), nullable=False)
+    status = db.Column(db.String(50), nullable=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    technician_id = db.Column(db.Integer, db.ForeignKey('technician.id'), nullable=False)
+    description = db.Column(db.String(1000), nullable=True)
+
+    history_entries = db.relationship('AppointmentHistory', backref='appointment', lazy=True)
+
+class AppointmentHistory(db.Model):
+    __tablename__ = 'appointment_history'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    appointment_id = db.Column(db.Integer, db.ForeignKey('appointment.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    technician_id = db.Column(db.Integer, db.ForeignKey('technician.id'), nullable=False)
+    action = db.Column(db.String(50), nullable=False)  # e.g., 'Created', 'Updated', 'Cancelled'
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    status = db.Column(db.String(50), nullable=False)
+    description = db.Column(db.String(1000), nullable=True)
+
+    # Relationships to User and Technician (if needed)
+    user = db.relationship('User', backref='appointment_histories', lazy=True)
+    technician = db.relationship('Technician', backref='appointment_histories', lazy=True)

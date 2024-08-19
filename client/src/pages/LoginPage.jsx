@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory} from 'react-router-dom'
 import axios from 'axios';
 import './LoginPage.css';
 
@@ -7,23 +8,25 @@ const LoginPage = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
+  const history = useHistory();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null); // Reset error state
     setSuccess(false); // Reset success state
-
+  
     try {
       const response = await axios.post('http://localhost:5000/login', {
-        username: email,
+        email: email,  // change this to email
         password: password,
       });
-
+  
       console.log('Login successful!', response.data);
-
+  
       // Handle success (e.g., save token, redirect)
       setSuccess(true);
       localStorage.setItem('access_token', response.data.access_token);
+      history.push('/'); // Redirect to home page (replace with your desired route)
       // Redirect or update UI here
     } catch (error) {
       console.error('Login failed:', error.response?.data?.message || error.message);

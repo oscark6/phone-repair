@@ -1,6 +1,7 @@
 import React from 'react';
 import './HomePage.css';
 import Footer from './Footer';
+import Portfolio from './Portfolio';
 
 const HomePage = () => {
   return (
@@ -13,6 +14,7 @@ const HomePage = () => {
         <a href="/appointment-booking" className="btn">Book Appointement here</a>
       </div>
     </div>
+    <Portfolio />
     <Footer />
 
     </div>
